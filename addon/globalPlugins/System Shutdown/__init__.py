@@ -34,7 +34,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		else:
 			value = int(shutdownTime)
 			ui.message(shutdownTime + u'초 후 시스템이 종료됩니다.')
-			win32api.InitiateSystemShutdown("127.0.0.1", None, value, 1, 1)
+			win32api.InitiateSystemShutdown("127.0.0.1", None, value, 1, 0)
 
 
 
