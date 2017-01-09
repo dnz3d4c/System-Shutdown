@@ -18,6 +18,8 @@ import wx
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
+	scriptCategory = u"System Shutdown"
+
 	def script_dlgSystemShutdown (self, gesture):
 		dlg = wx.TextEntryDialog(gui.mainFrame, _(u'종료 시간 입력'), _(u'시스템 종료'))
 		def callback(result):
@@ -26,6 +28,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 		gui.runScriptModalDialog(dlg, callback)
 
+	script_dlgSystemShutdown.__doc__ = _(u"시스템을 죵료합니다.")
 
 	def systemShutdown(self, shutdownTime):
 		speech.cancelSpeech()
