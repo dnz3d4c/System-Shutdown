@@ -31,11 +31,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	script_dlgSystemShutdown.__doc__ = _(u"시스템을 죵료합니다.")
 
 	def systemShutdown(self, shutdownTime):
-		speech.cancelSpeech()
 		if shutdownTime == u"":
+			speech.cancelSpeech()
 			ui.message(u'값을 잘못 입력하셨습니다.')
 		else:
 			value = int(shutdownTime)
+			speech.cancelSpeech()
 			ui.message(shutdownTime + u'초 후 시스템이 종료됩니다.')
 			win32api.InitiateSystemShutdown("127.0.0.1", None, value, 1, 0)
 
