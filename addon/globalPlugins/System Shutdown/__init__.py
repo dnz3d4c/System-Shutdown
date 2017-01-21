@@ -16,17 +16,27 @@ import speech
 import win32api
 import wx
 
+openedDlg = 0
+
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	scriptCategory = u"System Shutdown"
 
 	def script_dlgSystemShutdown (self, gesture):
-		dlg = wx.TextEntryDialog(gui.mainFrame, _(u'종료 시간 입력'), _(u'시스템 종료'))
-		def callback(result):
-			if result == wx.ID_OK:
-				wx.CallLater(100, self.systemShutdown, dlg.GetValue())
-
-		gui.runScriptModalDialog(dlg, callback)
+		global openedDlg
+		if openedDlg == 0:
+			openedDlg = 1
+			dlg = wx.TextEntryDialog(gui.mainFrame, _(u'종료 시간 입력'), _(u'시스템 종료'))
+			def callback(result):
+				if result == wx.ID_OK:
+					global openedDlg
+					openedDlg = 0
+					wx.CallLater(100, self.systemShutdown, dlg.GetValue())
+				elif result == wx.ID_CANCEL:
+					openedDlg = 0
+			gui.runScriptModalDialog(dlg, callback)
+		else:
+			ui.message(u"대화상자가 이미 열려잇습니다.")
 
 	script_dlgSystemShutdown.__doc__ = _(u"시스템을 죵료합니다.")
 
