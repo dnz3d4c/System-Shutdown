@@ -50,9 +50,18 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			ui.message(shutdownTime + u'초 후 시스템이 종료됩니다.')
 			win32api.InitiateSystemShutdown("127.0.0.1", None, value, 1, 0)
 
+	def script_cancelSystemShutdown(self, gesture):
+		try:
+			win32api.AbortSystemShutdown(u"127.0.0.1")
+		except:
+			ui.message(u"예약된 시스템 종료 작업이 없습니다.")
+
+	script_cancelSystemShutdown.__doc__ = _(u"예약된 시스템 종료 작업을 취소합니다.")
+
 
 
 	__gestures = {
-		"kb:Control+NVDA+w":"dlgSystemShutdown"
+		"kb:Control+NVDA+w":"dlgSystemShutdown",
+		"kb:NVDA+Control+q":"cancelSystemShutdown"
 
 	}
